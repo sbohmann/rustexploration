@@ -15,19 +15,21 @@ use std::io::prelude::BufRead;
 #[derive(Debug)]
 struct WordCounter {
     count: HashMap<String, u64>,
+    reader: BufReader<File>
 }
 
 impl WordCounter {
     fn new(reader: BufReader<File>) -> WordCounter {
         let mut instance = WordCounter {
-            count: HashMap::new()
+            count: HashMap::new(),
+            reader
         };
-        instance.evaluate(reader);
+        instance.evaluate();
         return instance;
     }
 
-    fn evaluate(&mut self, reader: BufReader<File>) {
-        for line in reader.lines() {
+    fn evaluate(&mut self) {
+        for line in self.reader.lines() {
             let line = line.expect("Could not read line");
             let words = line.split(" ");
             for word in words {

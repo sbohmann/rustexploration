@@ -44,7 +44,7 @@ fn WordCount(reader: BufReader<File>) {
     }
 }
 
-fn main() {
+fn run() {
     let arguments: Vec<String> = env::args().collect();
     let filename = &arguments[1];
     println!("Processing file: {}", filename);
