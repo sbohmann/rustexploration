@@ -19,7 +19,7 @@ impl Labyrinth {
 
 #[derive(Clone)]
 struct Map {
-    dataReference: Rc<RefCell<MapData>>,
+    data_reference: Rc<RefCell<MapData>>,
 }
 
 struct MapData {
@@ -30,9 +30,9 @@ struct MapData {
 
 impl Map {
     fn data(&self) -> RefMut<'_, MapData> {
-        return self.dataReference.borrow_mut();
+        return self.data_reference.borrow_mut();
     }
-    fn setWidth(&self, value: i16) {
+    fn set_width(&self, value: i16) {
         (&mut *self.data()).width = value
     }
 }
@@ -52,7 +52,7 @@ struct Player {
 
 impl Player {
     fn move_(&self) {
-        self.map.setWidth(987);
+        self.map.set_width(987);
     }
 }
 
