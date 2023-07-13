@@ -9,27 +9,27 @@
 use std::collections::HashMap;
 use std::env;
 use std::fs::File;
-use std::io::{BufReader};
+use std::io::{BufReader, Lines};
 use std::io::prelude::BufRead;
 
 #[derive(Debug)]
 struct WordCounter {
     count: HashMap<String, u64>,
-    reader: BufReader<File>
+    path: String
 }
 
 impl WordCounter {
-    fn new(reader: BufReader<File>) -> WordCounter {
+    fn new(path: String) -> WordCounter {
         let mut instance = WordCounter {
             count: HashMap::new(),
-            reader
+            path: path
         };
         instance.evaluate();
         return instance;
     }
 
     fn evaluate(&mut self) {
-        for line in self.reader.lines() {
+        for line in self.lines() {
             let line = line.expect("Could not read line");
             let words = line.split(" ");
             for word in words {
@@ -40,6 +40,13 @@ impl WordCounter {
                 }
             }
         }
+    }
+
+    fn lines(&self) -> Lines<BufReader<File>> {
+        BufReader::new(
+            File::open(self.path.to_string())
+                .expect("Could not open file"))
+            .lines()
     }
 
     fn increment(&mut self, word: &str) {
@@ -57,10 +64,8 @@ impl WordCounter {
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
-    let filename = &arguments[1];
-    println!("Processing file: {}", filename);
-    let file = File::open(filename).expect("Could not open file");
-    let reader = BufReader::new(file);
-    WordCounter::new(reader)
+    let path = arguments[1].clone();
+    println!("Processing file: {}", path);
+    WordCounter::new(path)
         .display();
 }
