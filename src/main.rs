@@ -12,6 +12,8 @@ use std::fs::File;
 use std::io::{BufReader, Lines};
 use std::io::prelude::BufRead;
 
+mod labyrinth;
+
 #[derive(Debug)]
 struct WordCounter {
     count: HashMap<String, u64>,
@@ -68,4 +70,5 @@ fn main() {
     println!("Processing file: {}", path);
     WordCounter::new(path)
         .display();
+    labyrinth::run();
 }
