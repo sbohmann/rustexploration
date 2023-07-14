@@ -13,6 +13,7 @@ use std::io::{BufReader, Lines};
 use std::io::prelude::BufRead;
 
 mod labyrinth;
+mod map;
 
 #[derive(Debug)]
 struct WordCounter {
@@ -70,5 +71,5 @@ fn main() {
     println!("Processing file: {}", path);
     WordCounter::new(path)
         .display();
-    labyrinth::run();
+    map::run();
 }
