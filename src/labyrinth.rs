@@ -17,6 +17,12 @@ impl Labyrinth {
     }
 }
 
+macro_rules! unwrap {
+    ($self:ident) => {
+        (&mut *$self.data_reference.borrow_mut())
+    }
+}
+
 #[derive(Clone)]
 struct Map {
     data_reference: Rc<RefCell<MapData>>,
@@ -29,11 +35,26 @@ struct MapData {
 }
 
 impl Map {
-    fn data(&self) -> RefMut<'_, MapData> {
-        return self.data_reference.borrow_mut();
+    fn new() -> Map{
+        Map {
+            data_reference: Rc::new(RefCell::new(MapData {
+                width: 0,
+                height: 0,
+                data: vec!()
+            }))
+        }
     }
     fn set_width(&self, value: i16) {
-        (&mut *self.data()).width = value
+        let this = unwrap!(self);
+        *this = MapData {
+            width: value,
+            height: 0,
+            data: vec!()
+        };
+    }
+    fn print(&self) {
+        let width = unwrap!(self).width;
+        println!("{width}")
     }
 }
 
@@ -57,5 +78,7 @@ impl Player {
 }
 
 pub fn run() {
-    println!("Hi! Labyrinth")
+    let map = Map::new();
+    map.set_width(987);
+    map.print();
 }
