@@ -12,12 +12,16 @@ use std::fs::File;
 use std::io::{BufReader};
 use std::io::prelude::BufRead;
 
-fn WordCount(reader: BufReader<File>) {
-    let count: HashMap::new();
+fn count_words(reader: BufReader<File>) {
+    let mut count = HashMap::new();
 
-    evaluate();
+    let mut increment = |word: &str| {
+        let key = word.to_string();
+        let count = count.entry(key).or_insert(0);
+        *count += 1;
+    };
 
-    fn evaluate() {
+    let evaluate = || {
         for line in reader.lines() {
             let line = line.expect("Could not read line");
             let words = line.split(" ");
@@ -29,27 +33,25 @@ fn WordCount(reader: BufReader<File>) {
                 }
             }
         }
-    }
+    };
 
-    fn increment(word: &str) {
-        let key = word.to_string();
-        let count = self.count.entry(key).or_insert(0);
-        *count += 1;
-    }
+    evaluate();
 
-    fn display() {
+    let mut display = || {
         for (key, value) in count.iter() {
             println!("{}: {}", key, value);
         }
-    }
+    };
+
+    display();
 }
 
-fn run() {
+pub(crate) fn modern() {
     let arguments: Vec<String> = env::args().collect();
     let filename = &arguments[1];
     println!("Processing file: {}", filename);
     let file = File::open(filename).expect("Could not open file");
     let reader = BufReader::new(file);
-    WordCounter::new(reader)
-        .display();
+    count_words(reader);
+        // .display();
 }
