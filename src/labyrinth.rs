@@ -3,7 +3,7 @@ use crate::map::Map;
 struct Labyrinth {
     map: Map,
     solver: Solver,
-    player: Player,
+    player: Player
 }
 
 impl Labyrinth {
@@ -17,11 +17,11 @@ impl Labyrinth {
 }
 
 struct Solver {
-    map: Map,
+    map: Map
 }
 
 struct Player {
-    map: Map,
+    map: Map
 }
 
 impl Player {

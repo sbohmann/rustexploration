@@ -15,7 +15,7 @@ pub struct Map {
 struct MapData {
     width: i16,
     height: i16,
-    data: Vec<Field>,
+    data: Vec<Field>
 }
 
 impl Map {
@@ -44,7 +44,7 @@ impl Map {
 
 enum Field {
     Empty,
-    Wall,
+    Wall
 }
 
 pub fn run() {
