@@ -46,7 +46,7 @@ impl Player {
     }
 }
 
-fn run() {
+pub(crate) fn run() {
     let labyrinth = Labyrinth::new();
     labyrinth.solve()
 }

@@ -76,4 +76,5 @@ fn main() {
     map::run();
     reader::run();
     modern::modern();
+    labyrinth::run();
 }

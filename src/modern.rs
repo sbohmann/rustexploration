@@ -37,7 +37,7 @@ fn count_words(reader: BufReader<File>) {
 
     evaluate();
 
-    let mut display = || {
+    let display = || {
         for (key, value) in count.iter() {
             println!("{}: {}", key, value);
         }
