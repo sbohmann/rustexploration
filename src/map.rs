@@ -9,7 +9,7 @@ macro_rules! unwrap {
 
 #[derive(Clone)]
 pub struct Map {
-    data_reference: Rc<RefCell<MapData>>,
+    data_reference: Rc<RefCell<MapData>>
 }
 
 struct MapData {
@@ -19,7 +19,7 @@ struct MapData {
 }
 
 impl Map {
-    pub fn new() -> Map{
+    pub fn new() -> Map {
         Map {
             data_reference: Rc::new(RefCell::new(MapData {
                 width: 0,
@@ -28,6 +28,7 @@ impl Map {
             }))
         }
     }
+
     pub fn set_width(&self, value: i16) {
         let this = unwrap!(self);
         *this = MapData {
@@ -36,6 +37,7 @@ impl Map {
             data: vec!()
         };
     }
+
     pub(crate) fn print(&self) {
         let width = unwrap!(self).width;
         println!("{width}")

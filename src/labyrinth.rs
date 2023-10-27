@@ -1,31 +1,45 @@
+use std::rc::Rc;
 use crate::map::Map;
 
 struct Labyrinth {
-    map: Map,
-    solver: Solver,
-    player: Player
+    map: Rc<Map>,
+    player: Rc<Player>,
+    solver: Rc<Solver>
 }
 
 impl Labyrinth {
-    fn new(map: &Map) -> Labyrinth {
-        Labyrinth {
-            map: map.clone(),
-            solver: Solver { map: map.clone() },
-            player: Player { map: map.clone() },
-        }
+    fn new() -> Labyrinth {
+        let map = Rc::new(Map::new());
+        let player = Rc::new(Player { map: map.clone() });
+        let solver = Rc::new(Solver { map: map.clone(), player: player.clone()});
+        return Labyrinth {
+            map,
+            player,
+            solver
+        };
+    }
+
+    fn solve(&self) {
+
     }
 }
 
 struct Solver {
-    map: Map
+    map: Rc<Map>,
+    player: Rc<Player>
 }
 
 struct Player {
-    map: Map
+    map: Rc<Map>
 }
 
 impl Player {
     fn move_(&self) {
         self.map.set_width(987);
     }
+}
+
+fn run() {
+    let labyrinth = Labyrinth::new();
+    labyrinth.solve()
 }

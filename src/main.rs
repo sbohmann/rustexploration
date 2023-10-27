@@ -15,6 +15,7 @@ use std::io::prelude::BufRead;
 mod labyrinth;
 mod map;
 mod modern;
+mod reader;
 
 #[derive(Debug)]
 struct WordCounter {
@@ -73,5 +74,6 @@ fn main() {
     WordCounter::new(path)
         .display();
     map::run();
+    reader::run();
     modern::modern();
 }
