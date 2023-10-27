@@ -16,7 +16,7 @@ struct Labyrinth {
 
 impl Labyrinth {
     fn new() -> Labyrinth {
-        let map = new(Map::new());
+        let map = new(Map::new(0, 0));
         let player = new(Player { map: map.clone() });
         let solver = new(Solver { map: map.clone(), player: player.clone()});
         return Labyrinth {
@@ -27,7 +27,24 @@ impl Labyrinth {
     }
 
     fn solve(&self) {
+        self.solver.borrow_mut().solve()
+    }
+}
 
+struct Player {
+    map: Ref<Map>
+}
+
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+impl Player {
+    fn free(&self, direction: Direction) -> bool {
+        false
     }
 }
 
@@ -36,13 +53,9 @@ struct Solver {
     player: Ref<Player>
 }
 
-struct Player {
-    map: Ref<Map>
-}
+impl Solver {
+    fn solve(&mut self) {
 
-impl Player {
-    fn move_(&mut self) {
-        self.map.borrow_mut().set_width(987);
     }
 }
 

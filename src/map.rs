@@ -1,22 +1,16 @@
-pub struct Map {
+pub(crate)  struct Map {
     width: i16,
     height: i16,
     data: Vec<Field>
 }
 
 impl Map {
-    pub fn new() -> Map {
+    pub fn new(width: i16, height: i16) -> Map {
         Map {
-            width: 0,
-            height: 0,
+            width,
+            height,
             data: vec!()
         }
-    }
-
-    pub fn set_width(&mut self, value: i16) {
-        self.width = value;
-        self.height = 0;
-        self.data = vec!();
     }
 }
 
@@ -31,7 +25,6 @@ enum Field {
 }
 
 pub fn run() {
-    let mut map = Map::new();
-    map.set_width(987);
+    let mut map = Map::new(0, 0);
     print(&map);
 }
