@@ -1,18 +1,4 @@
-use std::cell::{RefCell, RefMut};
-use std::rc::Rc;
-
-macro_rules! unwrap {
-    ($self:ident) => {
-        (&mut *$self.data_reference.borrow_mut())
-    }
-}
-
-#[derive(Clone)]
 pub struct Map {
-    data_reference: Rc<RefCell<MapData>>
-}
-
-struct MapData {
     width: i16,
     height: i16,
     data: Vec<Field>
@@ -21,27 +7,22 @@ struct MapData {
 impl Map {
     pub fn new() -> Map {
         Map {
-            data_reference: Rc::new(RefCell::new(MapData {
-                width: 0,
-                height: 0,
-                data: vec!()
-            }))
+            width: 0,
+            height: 0,
+            data: vec!()
         }
     }
 
-    pub fn set_width(&self, value: i16) {
-        let this = unwrap!(self);
-        *this = MapData {
-            width: value,
-            height: 0,
-            data: vec!()
-        };
+    pub fn set_width(&mut self, value: i16) {
+        self.width = value;
+        self.height = 0;
+        self.data = vec!();
     }
+}
 
-    pub(crate) fn print(&self) {
-        let width = unwrap!(self).width;
-        println!("{width}")
-    }
+pub(crate) fn print(instance: &Map) {
+    let width = instance.width;
+    println!("{width}")
 }
 
 enum Field {
@@ -50,7 +31,7 @@ enum Field {
 }
 
 pub fn run() {
-    let map = Map::new();
+    let mut map = Map::new();
     map.set_width(987);
-    map.print();
+    print(&map);
 }
