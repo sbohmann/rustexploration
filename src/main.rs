@@ -1,11 +1,3 @@
-// fn main() {
-//     let name = String { vec: "x" };
-//     name += "yes";
-//     println!("Hello, world! {name}");
-// }
-
-// word_counter.rs
-
 use std::collections::HashMap;
 use std::env;
 use std::fs::File;
@@ -73,7 +65,6 @@ fn main() {
     println!("Processing file: {}", path);
     WordCounter::new(path)
         .display();
-    map::run();
     reader::run();
     modern::modern();
     labyrinth::run();
