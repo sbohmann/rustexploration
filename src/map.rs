@@ -30,18 +30,8 @@ impl Map {
     }
 }
 
-pub(crate) fn print(instance: &Map) {
-    let width = instance.width;
-    println!("{width}")
-}
-
 #[derive(Clone, Copy, PartialEq)]
 pub(crate) enum Field {
     Empty,
     Wall
-}
-
-pub fn run() {
-    let mut map = Map::new(0, 0);
-    print(&map);
 }
