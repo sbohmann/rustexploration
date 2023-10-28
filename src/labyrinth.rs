@@ -17,7 +17,7 @@ struct Labyrinth {
 impl Labyrinth {
     fn new() -> Labyrinth {
         let map = new(Map::new(0, 0));
-        let player = new(Player { map: map.clone() });
+        let player = new(Player { x: 0, y: 0, map: map.clone()});
         let solver = new(Solver { map: map.clone(), player: player.clone()});
         return Labyrinth {
             map,
@@ -32,6 +32,8 @@ impl Labyrinth {
 }
 
 struct Player {
+    x: i16,
+    y: i16,
     map: Ref<Map>
 }
 
@@ -44,7 +46,13 @@ enum Direction {
 
 impl Player {
     fn free(&self, direction: Direction) -> bool {
-        false
+        let [x, y] = match direction {
+            Direction::Up => {[self.x, self.y - 1]}
+            Direction::Down => {[self.x, self.y + 1]}
+            Direction::Left => {[self.x - 1, self.y]}
+            Direction::Right => {[self.x + 1, self.y]}
+        };
+        return self.map.borrow().free(x, y)
     }
 }
 
