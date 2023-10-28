@@ -17,7 +17,9 @@ impl Map {
 
     pub fn get(&self, x: i16, y: i16) -> Field {
         return self.data[
-            usize::try_from(y * self.width + x).ok().unwrap()];
+            usize::try_from(y * self.width + x)
+                .ok()
+                .unwrap()];
     }
 
     pub fn free(&self, x: i16, y: i16) -> bool {
