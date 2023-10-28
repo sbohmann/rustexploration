@@ -61,7 +61,7 @@ impl Player {
 
     fn move_if_possible(&mut self, direction: Direction) {
         let [x, y] = self.new_position_for_direction(direction);
-        if (self.map.borrow().free(x, y)) {
+        if self.map.borrow().free(x, y) {
             self.x = x;
             self.y = y;
         }
