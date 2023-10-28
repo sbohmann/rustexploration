@@ -46,13 +46,25 @@ enum Direction {
 
 impl Player {
     fn free(&self, direction: Direction) -> bool {
-        let [x, y] = match direction {
+        let [x, y] = self.new_position_for_direction(direction);
+        return self.map.borrow().free(x, y)
+    }
+
+    fn new_position_for_direction(&self, direction: Direction) -> [i16; 2] {
+        return match direction {
             Direction::Up => {[self.x, self.y - 1]}
             Direction::Down => {[self.x, self.y + 1]}
             Direction::Left => {[self.x - 1, self.y]}
             Direction::Right => {[self.x + 1, self.y]}
         };
-        return self.map.borrow().free(x, y)
+    }
+
+    fn move_if_possible(&mut self, direction: Direction) {
+        let [x, y] = self.new_position_for_direction(direction);
+        if (self.map.borrow().free(x, y)) {
+            self.x = x;
+            self.y = y;
+        }
     }
 }
 
