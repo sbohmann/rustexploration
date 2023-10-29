@@ -11,7 +11,7 @@ impl Map {
         Map {
             width,
             height,
-            data: vec!()
+            data: vec![Field::Empty; usize::try_from(width * height).unwrap()]
         }
     }
 
@@ -29,6 +29,19 @@ impl Map {
             x < self.width &&
             y < self.height &&
             self.get(x, y) == Empty;
+    }
+
+    pub fn print(&self) {
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let letter = match self.get(x, y) {
+                    Empty => ' ',
+                    Field::Wall => '#'
+                };
+                print!("{letter}")
+            }
+            println!()
+        }
     }
 }
 
