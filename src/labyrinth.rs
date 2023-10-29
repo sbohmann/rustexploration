@@ -16,7 +16,7 @@ struct Labyrinth {
 
 impl Labyrinth {
     fn new() -> Labyrinth {
-        let map = new(Map::new(0, 0));
+        let map = new(Map::new(10, 10));
         let player = new(Player { x: 0, y: 0, map: map.clone()});
         let solver = new(Solver { map: map.clone(), player: player.clone()});
         return Labyrinth {
@@ -75,7 +75,7 @@ struct Solver {
 
 impl Solver {
     fn solve(&mut self) {
-
+        self.map.borrow().print()
     }
 }
 

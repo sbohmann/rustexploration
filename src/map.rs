@@ -11,7 +11,18 @@ impl Map {
         Map {
             width,
             height,
-            data: vec![Field::Empty; usize::try_from(width * height).unwrap()]
+            // data: vec![Field::Empty; usize::try_from(width * height).unwrap()]
+            // Yes, this is very, very ugly but adding a map loader has simply not yet been done 😎
+            data: vec!(Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
+                       Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall)
         }
     }
 
