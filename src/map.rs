@@ -1,6 +1,4 @@
-use Field::Empty;
-use Field::Wall;
-use Field::Goal;
+use Field::*;
 
 pub(crate) struct Map {
     width: i16,
