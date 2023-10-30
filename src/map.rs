@@ -42,15 +42,20 @@ impl Map {
             self.get(x, y) == Empty;
     }
 
-    pub fn print(&self) {
+    pub fn print(&self, player_x: i16, player_y: i16) {
+        (0..5).for_each(|_| println!());
         for y in 0..self.height {
             for x in 0..self.width {
-                let letter = match self.get(x, y) {
-                    Empty => "  ",
-                    Wall => "██",
-                    Goal => "░░"
-                };
-                print!("{letter}")
+                if x == player_x && y == player_y {
+                    print!("**")
+                } else {
+                    let letter = match self.get(x, y) {
+                        Empty => "  ",
+                        Wall => "██",
+                        Goal => "░░"
+                    };
+                    print!("{letter}")
+                }
             }
             println!()
         }

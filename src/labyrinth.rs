@@ -1,5 +1,9 @@
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::thread::sleep;
+use std::time::Duration;
+use rand::random;
+use crate::labyrinth::Direction::{Down, Left, Right, Up};
 use crate::map::Map;
 
 type Ref<T> = Rc<RefCell<T>>;
@@ -17,7 +21,7 @@ struct Labyrinth {
 impl Labyrinth {
     fn new() -> Labyrinth {
         let map = new(Map::new(10, 10));
-        let player = new(Player { x: 0, y: 0, map: map.clone()});
+        let player = new(Player { x: 8, y: 8, map: map.clone()});
         let solver = new(Solver { map: map.clone(), player: player.clone()});
         return Labyrinth {
             map,
@@ -75,7 +79,19 @@ struct Solver {
 
 impl Solver {
     fn solve(&mut self) {
-        self.map.borrow().print()
+        loop {
+            let direction = match random::<u8>() % 4 {
+                 0 => Up,
+                 1 => Down,
+                 2 => Left,
+                 3 => Right,
+                _ => panic!("Logical error")
+            };
+            let mut player= self.player.borrow_mut();
+            player.move_if_possible(direction);
+            self.map.borrow().print(player.x, player.y);
+            sleep(Duration::from_secs(1));
+        }
     }
 }
 
