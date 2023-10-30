@@ -15,14 +15,14 @@ fn new<T>(value: T) -> Ref<T> {
 struct Labyrinth {
     map: Ref<Map>,
     player: Ref<Player>,
-    solver: Ref<Solver>
+    solver: Ref<dyn Solver>
 }
 
 impl Labyrinth {
-    fn new() -> Labyrinth {
+    fn new(create_solver: fn(Ref<Map>, Ref<Player>) -> Ref<dyn Solver>) -> Labyrinth {
         let map = new(Map::new(10, 10));
         let player = new(Player { x: 8, y: 8, map: map.clone()});
-        let solver = new(Solver { map: map.clone(), player: player.clone(), number_of_moves: 0});
+        let solver = create_solver(map.clone(), player.clone());
         return Labyrinth {
             map,
             player,
@@ -72,13 +72,17 @@ impl Player {
     }
 }
 
-struct Solver {
+trait Solver {
+    fn solve(&mut self);
+}
+
+struct RandomSolver {
     map: Ref<Map>,
     player: Ref<Player>,
     number_of_moves: usize
 }
 
-impl Solver {
+impl Solver for RandomSolver {
     fn solve(&mut self) {
         loop {
             let direction = match random::<u8>() % 4 {
@@ -104,6 +108,7 @@ impl Solver {
 }
 
 pub(crate) fn run() {
-    let labyrinth = Labyrinth::new();
+    let labyrinth = Labyrinth::new(
+        |map: Ref<Map>, player: Ref<Player>| new(RandomSolver { map: map, player: player, number_of_moves: 0}));
     labyrinth.solve()
 }
