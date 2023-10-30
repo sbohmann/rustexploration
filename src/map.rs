@@ -2,7 +2,7 @@ use Field::Empty;
 use Field::Wall;
 use Field::Goal;
 
-pub(crate)  struct Map {
+pub(crate) struct Map {
     width: i16,
     height: i16,
     data: Vec<Field>
