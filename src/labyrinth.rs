@@ -4,7 +4,7 @@ use std::thread::sleep;
 use std::time::Duration;
 use rand::random;
 use crate::labyrinth::Direction::{Down, Left, Right, Up};
-use crate::map::Map;
+use crate::map::{Field, Map};
 
 type Ref<T> = Rc<RefCell<T>>;
 
@@ -22,7 +22,7 @@ impl Labyrinth {
     fn new() -> Labyrinth {
         let map = new(Map::new(10, 10));
         let player = new(Player { x: 8, y: 8, map: map.clone()});
-        let solver = new(Solver { map: map.clone(), player: player.clone()});
+        let solver = new(Solver { map: map.clone(), player: player.clone(), number_of_moves: 0});
         return Labyrinth {
             map,
             player,
@@ -74,7 +74,8 @@ impl Player {
 
 struct Solver {
     map: Ref<Map>,
-    player: Ref<Player>
+    player: Ref<Player>,
+    number_of_moves: usize
 }
 
 impl Solver {
@@ -89,7 +90,14 @@ impl Solver {
             };
             let mut player= self.player.borrow_mut();
             player.move_if_possible(direction);
-            self.map.borrow().print(player.x, player.y);
+            let map = self.map.borrow();
+            map.print(player.x, player.y);
+            self.number_of_moves += 1;
+            let number_of_moves = self.number_of_moves;
+            println!("{number_of_moves}");
+            if map.get(player.x, player.y) == Field::Goal {
+                return;
+            }
             sleep(Duration::from_secs(1));
         }
     }

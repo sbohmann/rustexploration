@@ -39,7 +39,7 @@ impl Map {
             x >= 0 &&
             x < self.width &&
             y < self.height &&
-            self.get(x, y) == Empty;
+            self.get(x, y) != Wall;
     }
 
     pub fn print(&self, player_x: i16, player_y: i16) {
