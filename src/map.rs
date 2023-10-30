@@ -1,4 +1,6 @@
-use crate::map::Field::Empty;
+use Field::Empty;
+use Field::Wall;
+use Field::Goal;
 
 pub(crate)  struct Map {
     width: i16,
@@ -13,16 +15,16 @@ impl Map {
             height,
             // data: vec![Field::Empty; usize::try_from(width * height).unwrap()]
             // Yes, this is very, very ugly but adding a map loader has simply not yet been done 😎
-            data: vec!(Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Field::Wall,
-                       Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall, Field::Wall)
+            data: vec!(Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall,
+                       Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Empty, Wall, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Goal, Wall, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Empty, Wall, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Empty, Wall, Wall, Wall, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Wall,
+                       Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall, Wall)
         }
     }
 
@@ -46,8 +48,9 @@ impl Map {
         for y in 0..self.height {
             for x in 0..self.width {
                 let letter = match self.get(x, y) {
-                    Empty => ' ',
-                    Field::Wall => '#'
+                    Empty => "  ",
+                    Wall => "██",
+                    Goal => "░░"
                 };
                 print!("{letter}")
             }
@@ -59,5 +62,6 @@ impl Map {
 #[derive(Clone, Copy, PartialEq)]
 pub(crate) enum Field {
     Empty,
-    Wall
+    Wall,
+    Goal
 }
